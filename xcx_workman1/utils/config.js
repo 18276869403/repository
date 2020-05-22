@@ -1,6 +1,7 @@
 // const baseUrl = "https://localhost:5001/api/app/"
 // const sysUrl = "https://localhost:5001/api/sys/"
 var deng = require('./configdxy.js')
+var zhu = require('./configzpy.js')
 const imgurl = "http://192.168.1.242:8081/work-boot/"
 // const imgurl = "http://localhost:5001"
 // const baseUrl = imgurl + "/api/wx/"
@@ -10,4 +11,5 @@ module.exports = {
 	// GetwxLogin: GetwxLogin,
 	imgurl: imgurl,
 	deng: deng,
+	zhu: zhu
 };
