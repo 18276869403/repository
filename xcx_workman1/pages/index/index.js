@@ -135,12 +135,95 @@ Page({
         storename: '马克波罗瓷砖'
       }
     ],
+    xuqiulist:[],
+    grlist:[],
+    sjlist:[]
+
   },
 
   onLoad: function() {
     this.firstbanner()
     this.pointList()
+    this.xqneedlist()
+    this.grneedlist()
+    this.sjneedlist()
+
   },
+// 需求列表
+xqneedlist() {
+  var that = this
+  var data={
+    pages: 1,
+    size: 10
+  }
+  qingqiu.get("zuixinxq", data, function(re) {
+    if (re.success == true) {
+      if (re.result != null) {
+        that.xuqiulist = re.result.records
+        for(var i= 0 ; i < that.xuqiulist.length; i++){
+          that.xuqiulist[i].publishTime = re.result.records[i].publishTime.split(" ")[0]
+        }    
+        that.setData ({
+          xuqiulist : re.result.records
+        })
+      } else {
+        qingqiu.tk('未查询到任何数据')
+      }
+    } else {
+      qingqiu.tk('请求出错啦')
+    }
+  })
+},
+// 推荐工人
+grneedlist() {
+  var that = this
+  var data={
+    pages: 1,
+    size: 10
+  }
+  qingqiu.get("tjgr", data, function(re) {
+    if (re.success == true) {
+      if (re.result != null) {
+        that.grlist = re.result.records
+        for(var i= 0 ; i < that.grlist.length; i++){
+          that.grlist[i].publishTime = re.result.records[i].publishTime.split(" ")[0]
+        }    
+        that.setData ({
+          grlist : re.result.records
+        })
+      } else {
+        qingqiu.tk('未查询到任何数据')
+      }
+    } else {
+      qingqiu.tk('请求出错啦')
+    }
+  })
+},
+// 推荐商家
+sjneedlist() {
+  var that = this
+  var data={
+    pages: 1,
+    size: 10
+  }
+  qingqiu.get("tjsj", data, function(re) {
+    if (re.success == true) {
+      if (re.result != null) {
+        that.sjlist = re.result.records
+        for(var i= 0 ; i < that.sjlist.length; i++){
+          that.sjlist[i].publishTime = re.result.records[i].publishTime.split(" ")[0]
+        }    
+        that.setData ({
+          sjlist : re.result.records
+        })
+      } else {
+        qingqiu.tk('未查询到任何数据')
+      }
+    } else {
+      qingqiu.tk('请求出错啦')
+    }
+  })
+},
 
   // 获取广告
   firstbanner:function() {
