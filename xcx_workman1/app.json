@@ -18,7 +18,8 @@
     "pages/applyBusiness/applyBusiness",
     "pages/submitNeeds/submitNeeds",
     "pages/needsDetails/needsDetails",
-    "pages/need/need"
+    "pages/need/need",
+    "pages/outurl/outurl"
   ],
   "window": {
     "navigationBarBackgroundColor": "#ffffff",
@@ -34,7 +35,7 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "大厅",
+        "text": "首页",
         "iconPath": "pages/image/index.png",
         "selectedIconPath": "pages/image/indexhong.png"
       },
