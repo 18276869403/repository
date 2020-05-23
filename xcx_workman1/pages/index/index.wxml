@@ -160,32 +160,32 @@
       </view>
       <scroll-view class="worker-list" scroll-x="true" style='width:100%'>
         <view class="hengxiang">
-          <view class="" wx:for="{{grlist}}" wx:for-index="index" wx:key="id">
+          <view class="" wx:for="{{storeList}}" wx:for-index="index" wx:key="id">
             <view class="worker-item zongxiang" bindtap="workerDetails">
               <view class="worker-item-img">
-                <image src="../image/top.png" class="worker-img"></image>
+                <image src="{{item.picIurl}}" class="worker-img"></image>
               </view>
               <view class="worker-item-top hengxiang">
                 <view class="worker-item-top-left">
-                  {{item.workername}}
+                  {{item.name}}
                 </view>
                 <view class="hengxiang worker-rank">
                   <view>
                     <image class="rank-img" src="../image/rank.png"></image>
                   </view>
-                  <view>{{item.degree}}</view>
+                  <view>{{item.shopName}}</view>
                 </view>
               </view>
               <view class="worker-item-bottom hengxiang">
                 <view class="dot"></view>
                 <view class="worker-sort shenglue">
-                  {{item.workersort1}}
+                  {{item.oneClassName}}
                 </view>
               </view>
               <view class="worker-item-bottom hengxiang">
                 <view class="dot"></view>
                 <view class="worker-sort shenglue">
-                  {{item.workersort2}}
+                  {{item.twoClassName}}
                 </view>
               </view>
             </view>
@@ -203,24 +203,24 @@
       </view>
       <scroll-view class="worker-list" scroll-x="true" style='width:100%'>
         <view class="hengxiang">
-          <view class="" wx:for="{{sjlist}}" wx:for-index="index" wx:key='index'>
+          <view class="" wx:for="{{goodsList}}" wx:for-index="index" wx:key='index'>
             <view class="worker-item zongxiang" bindtap="businessDetails">
               <view class="worker-item-img">
-                <image src="../image/top.png" class="worker-img"></image>
+                <image src="{{item.picIurl}}" class="worker-img"></image>
               </view>
               <view class="worker-item-top shenglue">
-                {{item.storename}}
+                {{item.shopName}}
               </view>
               <view class="worker-item-bottom hengxiang">
                 <view class="dot"></view>
                 <view class="worker-sort shenglue">
-                  {{item.storesort1}}
+                  {{item.oneClassName}}
                 </view>
               </view>
               <view class="worker-item-bottom hengxiang">
                 <view class="dot"></view>
                 <view class="worker-sort shenglue">
-                  {{item.storesort2}}
+                  {{item.twoClassName}}
                 </view>
               </view>
             </view>

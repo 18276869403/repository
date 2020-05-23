@@ -56,85 +56,9 @@ Page({
 
       }
     ],
-    workerList: [{
-        id: 1,
-        degree: '二级工匠',
-        workername: '222',
-        workersort1: '水电工 | 泥瓦工 ',
-        workersort2: '水电工 | 泥瓦工 '
-      },
-      {
-        id: 2,
-        workername: '222',
-        degree: '二级工匠',
-        workersort1: '水电工 | 泥瓦工 ',
-        workersort2: '水电工 | 泥瓦工 '
-      },
-      {
-        id: 3,
-        workername: '222',
-        degree: '二级工匠',
-        workersort1: '水电工 | 泥瓦工 ',
-        workersort2: '水电工 | 泥瓦工 '
-      },
-      {
-        id: 4,
-        workername: '222',
-        degree: '二级工匠',
-        workersort1: '水电工 | 泥瓦工 ',
-        workersort2: '水电工 | 泥瓦工 '
-      }
-    ],
-    storeList: [{
-        id: 1,
-        storename: '新飞电新飞电器万载店器万载店',
-        storesort1: '水电工 | 泥瓦工 ',
-        storesort2: '水电工 | 泥瓦工 '
-      },
-      {
-        id: 2,
-        storename: '新飞电器万载店',
-        storesort1: '水电工 | 泥瓦工 ',
-        storesort2: '水电工 | 泥瓦工 '
-      },
-      {
-        id: 3,
-        storename: '新飞电器万载店',
-        storesort1: '水电工 | 泥瓦工 ',
-        storesort2: '水电工 | 泥瓦工 '
-      },
-      {
-        id: 4,
-        storename: '新飞电器万载店',
-        storesort1: '水电工 | 泥瓦工 ',
-        storesort2: '水电工 | 泥瓦工 '
-      }
-    ],
-    goodsList: [{
-        id: 1,
-        goodsname: '新飞电新飞电器万载店器万载店',
-        goodsprice: '5.00',
-        storename: '马克波罗瓷砖'
-      },
-      {
-        id: 2,
-        goodsname: '新飞电新飞电器万载店器万载店',
-        goodsprice: '5.00',
-        storename: '马克波罗瓷马克波罗瓷砖砖'
-      },
-      {
-        id: 3,
-        goodsname: '新飞电新飞电器万载店器万载店',
-        goodsprice: '5.00',
-        storename: '马克波罗瓷砖'
-      },
-      {
-        id: 4,
-        goodsname: '新飞电新飞电器万载店器万载店',
-        goodsprice: '5.00',
-        storename: '马克波罗瓷砖'
-      }
-    ],
+    workerList: [],
+    storeList: [],
+    goodsList: [],
     xuqiulist:[],
     grlist:[],
     sjlist:[]
@@ -142,11 +66,11 @@ Page({
   },
 
   onLoad: function() {
-    this.firstbanner()
-    this.pointList()
+    this.firstbanner() //banner
+    this.pointList() //通知
     this.xqneedlist()
-    this.grneedlist()
-    this.sjneedlist()
+    this.grneedlist() //工人
+    this.sjneedlist()  //商家
 
   },
 // 需求列表
@@ -179,24 +103,37 @@ grneedlist() {
   var that = this
   var data={
     pages: 1,
-    size: 10
+    size: 10,
+    wxState:1
   }
-  qingqiu.get("tjgr", data, function(re) {
+  qingqiu.get("wxUserPage", data, function(re) {
     if (re.success == true) {
       if (re.result != null) {
-        that.grlist = re.result.records
-        for(var i= 0 ; i < that.grlist.length; i++){
-          that.grlist[i].publishTime = re.result.records[i].publishTime.split(" ")[0]
-        }    
-        that.setData ({
-          grlist : re.result.records
+        console.log(re.result.records)
+        for(let obj of re.result.records){
+          if(obj.starClass == 0){
+            obj.shopName = ""
+          }else if(obj.starClass == 1){
+            obj.shopName = "一级工匠"
+          }else if(obj.starClass == 2){
+            obj.shopName = "二级工匠"
+          }else if(obj.starClass == 3){
+            obj.shopName = "三级工匠"
+          }else if(obj.starClass == 4){
+            obj.shopName = "四级工匠"
+          }if(obj.starClass == 5){
+            obj.shopName = "五级工匠"
+          }
+          obj.picIurl = that.data.viewUrl + obj.picIurl
+          obj.oneClassName = obj.oneClassName.replace(/,/, "|")
+          obj.twoClassName = obj.twoClassName.replace(/,/, "|")
+        }
+        console.log(re.result.records)
+        that.setData({
+          storeList:re.result.records
         })
-      } else {
-        qingqiu.tk('未查询到任何数据')
-      }
-    } else {
-      qingqiu.tk('请求出错啦')
-    }
+      } 
+    } 
   })
 },
 // 推荐商家
@@ -204,24 +141,22 @@ sjneedlist() {
   var that = this
   var data={
     pages: 1,
-    size: 10
+    size: 10,
+    wxState:0
   }
-  qingqiu.get("tjsj", data, function(re) {
+  qingqiu.get("wxUserPage", data, function(re) {
     if (re.success == true) {
       if (re.result != null) {
-        that.sjlist = re.result.records
-        for(var i= 0 ; i < that.sjlist.length; i++){
-          that.sjlist[i].publishTime = re.result.records[i].publishTime.split(" ")[0]
-        }    
-        that.setData ({
-          sjlist : re.result.records
+        for(let obj of re.result.records){
+          obj.picIurl = that.data.viewUrl + obj.picIurl
+          obj.oneClassName = obj.oneClassName.replace(/,/, "|")
+          obj.twoClassName = obj.twoClassName.replace(/,/, "|")
+        }
+        that.setData({
+          goodsList:re.result.records
         })
-      } else {
-        qingqiu.tk('未查询到任何数据')
-      }
-    } else {
-      qingqiu.tk('请求出错啦')
-    }
+      } 
+    } 
   })
 },
 
@@ -237,7 +172,7 @@ sjneedlist() {
         if(re.result != null){
           that.data.bannerImg = re.result
           for(let obj of that.data.bannerImg){
-            obj.bannerUrl= configurl.viewUrl+obj.bannerUrl;
+            obj.bannerUrl= that.data.viewUrl+obj.bannerUrl;
           }
           console.log(that.data.bannerImg)
           that.setData({
@@ -248,6 +183,7 @@ sjneedlist() {
     })
   },
 
+  // banner点击事件
   goBaidu:function(event){
     var data = (event.currentTarget.dataset)
     wx.navigateTo({
@@ -259,6 +195,7 @@ sjneedlist() {
     })
   },
 
+  // 通知
   pointList:function(){
     var that = this
     var data = {
@@ -274,15 +211,6 @@ sjneedlist() {
           that.setData({
             msgList:re.result.records
           })
-          // that.data.msgList = re.result
-          // console.log(that.data.msgList)
-          // for(let obj of that.data.bannerImg){
-          //   obj.bannerUrl= configurl.viewUrl+obj.bannerUrl;
-          // }
-          // console.log(that.data.bannerImg)
-          // that.setData({
-          //   bannerImg:that.data.bannerImg
-          // })
         }
       }
     })
