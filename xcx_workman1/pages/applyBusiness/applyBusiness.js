@@ -1,5 +1,9 @@
 // pages/applyBusiness/applyBusiness.js
 const app = getApp()
+
+const qingqiu = require('../../utils/request.js')
+const api = require('../../utils/config.js')
+
 Page({
 
   /**
@@ -163,7 +167,6 @@ Page({
     this.setData({
       imgUrl: api.imgUrl
     })
-
     if (app.globalData.wxid == null || app.globalData.wxid == '') {
       this.onUser()
     }
@@ -182,6 +185,7 @@ Page({
     var that = this
     wx.login({
       success: function(res) {
+        debugger
         qingqiu.get("getKeyInfo", {
           code: res.code
         }, function(re) {
