@@ -2,12 +2,12 @@
 //获取应用实例
 const app = getApp()
 //调用接口js
-const apiconfig = require('../../utils/configdxy.js')
-
 const qingqiu = require('../../utils/request.js')
+const configurl = require('../../utils/config.js')
 
 Page({
   data: {
+    viewUrl:configurl.viewUrl,
     msgList: [
       {
         id: "1",
@@ -22,19 +22,7 @@ Page({
         title: "恭喜王南入驻成功！"
       }
     ],
-    bannerImg: [{
-        id: 1,
-        bannerimg: '../image/top.png'
-      },
-      {
-        id: 2,
-        bannerimg: '../image/top.png'
-      },
-      {
-        id: 3,
-        bannerimg: '../image/top.png'
-      }
-    ],
+    bannerImg: [],
     needsList: [{
         id: 1,
         needType: 0,
@@ -146,26 +134,90 @@ Page({
         goodsprice: '5.00',
         storename: '马克波罗瓷砖'
       }
-    ]
+    ],
   },
 
   onLoad: function() {
-    this.advertisement()
+    this.firstbanner()
+    this.pointList()
   },
 
   // 获取广告
-  advertisement:function() {
+  firstbanner:function() {
+    var that = this
     var data = {
       page:1,
       size:100      
     }
-    qingqiu.get('bannerlist',data,function(re){
-      debugger
-      if(re.data.success == true){
-        
+    qingqiu.get("bannerlist", data , function(re){
+      if(re.success == true){
+        if(re.result != null){
+          that.data.bannerImg = re.result
+          for(let obj of that.data.bannerImg){
+            obj.bannerUrl= configurl.viewUrl+obj.bannerUrl;
+          }
+          console.log(that.data.bannerImg)
+          that.setData({
+            bannerImg:that.data.bannerImg
+          })
+        }
       }
     })
   },
+
+  goBaidu:function(event){
+    var data = (event.currentTarget.dataset)
+    wx.navigateTo({
+      url:'../outurl/outurl?goBaidu='+ data.url, //
+      success:function() {
+      },       //成功后的回调；
+      fail:function() { },         //失败后的回调；
+      complete:function() { },      //结束后的回调(成功，失败都会执行)
+    })
+  },
+
+  pointList:function(){
+    var that = this
+    var data = {
+      page:1,
+      size:10      
+    }
+    qingqiu.get("pointList", data ,function(re){
+      if(re.success == true){
+        if(re.result != null){
+          for(let obj of re.result.records){
+            obj.name = "恭喜" + obj.name + "成功入驻";
+          }
+          that.setData({
+            msgList:re.result.records
+          })
+          // that.data.msgList = re.result
+          // console.log(that.data.msgList)
+          // for(let obj of that.data.bannerImg){
+          //   obj.bannerUrl= configurl.viewUrl+obj.bannerUrl;
+          // }
+          // console.log(that.data.bannerImg)
+          // that.setData({
+          //   bannerImg:that.data.bannerImg
+          // })
+        }
+      }
+    })
+  },
+
+  firstactivity:function(){
+
+  },
+  firstneeds:function(){
+
+  },
+
+  advertisement:function(){
+    var that = this
+    console.log(this)
+    console.log(that.data.bannerImg)
+  },
+ 
 
   // 跳转到工人入驻页面
   applyBusiness: function() {
