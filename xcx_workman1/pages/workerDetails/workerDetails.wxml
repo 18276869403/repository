@@ -10,7 +10,7 @@
         </view>
         <view class="list-item-right zongxiang">
           <view class="right-name">
-            照新军
+            {{workerDetail.name}}
           </view>
           <view class="right-content hengxiang">
 
@@ -18,7 +18,7 @@
               <view class="">
                 <image src="../image/dengji.png" class="dengji-img"></image>
               </view>
-              <view>2级工匠</view>
+              <view>{{workerDetail.shopName}}</view>
             </view>
             <view class="right-content-item hengxiang">
               <view class="">
@@ -30,17 +30,17 @@
               <view class="">
                 <image src="../image/shengri.png" class="dengji-img"></image>
               </view>
-              <view>28岁</view>
+              <view>{{workerDetail.dateBirth}}岁</view>
             </view>
           </view>
           <view class="right-sort zongxiang">
             <view class="right-sort-item hengxiang">
               <view class="dot"></view>
-              <view>下水道 | 下水道2 </view>
+              <view>{{workerDetail.oneClassName}} </view>
             </view>
             <view class="right-sort-item hengxiang">
               <view class="dot"></view>
-              <view>下水道3 | 下水道4</view>
+              <view>{{workerDetail.twoClassName}}</view>
             </view>
           </view>
           <view class="right-bottom hengxiang">
@@ -64,21 +64,21 @@
             <image src="../image/jingyan.png" class="basic-img"></image>
           </view>
           <view class="basic-tips">经验：</view>
-          <view class="basic-text">10年</view>
+          <view class="basic-text">{{workerDetail.employ}}</view>
         </view>
         <view class="basic-list-item hengxiang">
           <view class="basicImg">
             <image src="../image/diqu.png" class="basic-img"></image>
           </view>
           <view class="basic-tips">地区：</view>
-          <view class="basic-text">XXXX县 | 双桥镇</view>
+          <view class="basic-text">{{workerDetail.oneAreaName}} | {{workerDetail.twoAreaName}}</view>
         </view>
         <view class="basic-list-item hengxiang">
           <view class="basicImg">
             <image src="../image/phone.png" class="basic-img"></image>
           </view>
           <view class="basic-tips">电话：</view>
-          <view class="basic-text1">178******90</view>
+          <view class="basic-text1">{{workerDetail.phone}}</view>
           <view class="basic-look">
             <view class="look-button">查看电话</view>
           </view>
@@ -88,7 +88,7 @@
             <image src="../image/jieshao.png" class="basic-img"></image>
           </view>
           <view class="basic-tips">介绍：</view>
-          <view class="basic-text">专业瓷砖铺设，从事铺设工作将近10年，近10年接触过的工程项目多个经验丰富。</view>
+          <view class="basic-text">{{workerDetail.content}}</view>
         </view>
       </view>
     </view>

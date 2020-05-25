@@ -3,6 +3,7 @@ const app = getApp()
 
 Page({
   data: {
+    workerDetail:[],
     showList: [{
       id: 1,
       pinglun: '12',
@@ -21,8 +22,11 @@ Page({
     ],
   },
 
-  onLoad: function () {
-
+  onLoad: function (options) {
+    var workerDetail = JSON.parse(options.obj)
+    console.log(workerDetail)
+    this.setData({
+      workerDetail :workerDetail 
+    })
   },
-
 })
