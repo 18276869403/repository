@@ -1,5 +1,5 @@
 var api = require('./config.js')
-const baseUrl = "http://192.168.1.250:3000/work-boot/"
+const baseUrl = "http://192.168.1.237:8081/work-boot/"
 
 // 2.0需要工人，商家分类表：可选2个分类-编辑
 const Edit = baseUrl + "work/userClass/Edit"
@@ -12,7 +12,11 @@ const Bannerlist = baseUrl + "pc/hall/list"
 // 获取广告列表
 const PointLIst = baseUrl + "pc/hall/pointList"
 // 获取推荐工人/推荐商家
-const WxUserPage = baseUrl + "/pc/hall/wxUserPage"
+const WxUserPage = baseUrl + "pc/hall/wxUserPage"
+// 入驻功能一级分类 
+const OneClassList = baseUrl + "pc/hall/oneClassList"
+// 晒晒
+const CasePage = baseUrl + "pc/hall/casePage"
 
 module.exports = {
   edit: Edit,
@@ -20,5 +24,7 @@ module.exports = {
   upload:Upload,
   bannerlist:Bannerlist,
   pointList:PointLIst,
-  wxUserPage:WxUserPage
+  wxUserPage:WxUserPage,
+  oneClassList:OneClassList,
+  casePage:CasePage  
 };
