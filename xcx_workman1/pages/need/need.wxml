@@ -44,7 +44,7 @@
   <view class="content zongxiang">
     <!-- 最新需求模块 -->
     <view class="content-need">
-      <view class="list zongxiang" wx:for="{{needsList}}" wx:for-index="index" wx:key="{{item.id}}">
+      <view class="list zongxiang" wx:for="{{needsList}}" wx:for-index="index" wx:key="index" >
         <view class="need-list hengxiang" bindtap="needsDetails">
           <view class="need-list-left">
             <image src="../image/top.png" class="need-content-img"></image>
@@ -59,18 +59,18 @@
                 <view class="content-list-title">
                   <!-- <image src="../image/shang.png" class="gong-img" wx:if="{{item.wxState==0}}"></image>
                 <image src="../image/gong.png" class="gong-img" wx:if="{{item.wxState==1}}"></image> -->
-                  ¥{{item.price}}
+                  ¥{{item.backup3}}
                 </view>
                 <view class="hengxiang content-status">
                   <view class="content-status-img">
                     <image src="../image/shalou.png" class="shalou-img"></image>
 
                   </view>
-                  <view class="content-status-text">{{item.status}}</view>
+                  <view class="content-status-text">{{item.needState}}</view>
                 </view>
               </view>
               <view class="content-neirong">
-                {{item.title}}
+                {{item.needTitle}}
               </view>
               <view class="content-list-bottom hengxiang">
                 <view class="list-bottom-item hengxiang">
@@ -79,7 +79,7 @@
                       <image src="../image/dingwei.png" class="dingwei-img"></image>
                     </view>
                     <view class="bottom-dingwei">
-                      {{item.location}}
+                      {{item.oneAreaName}}|{{item.twoAreaName}}
                     </view>
                   </view>
                 </view>
@@ -89,7 +89,7 @@
                       <image src="../image/renyuan.png" class="baoming-img"></image>
                     </view>
                     <view>
-                      <text style="color:#333333">{{item.number}}</text>人浏览
+                      <text style="color:#333333">{{item.backup2}}</text>人浏览
                     </view>
                   </view>
                 </view>
@@ -99,7 +99,7 @@
                       <image src="../image/shijian.png" class="shijian-img"></image>
                     </view>
                     <view>
-                      {{item.date}}
+                      {{item.publishTime}}
                     </view>
                   </view>
                 </view>
@@ -109,9 +109,6 @@
         </view>
       </view>
     </view>
-
-
-
 
   </view>
 
