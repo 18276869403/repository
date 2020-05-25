@@ -3,59 +3,15 @@
 const app = getApp()
 //调用接口js
 const qingqiu = require('../../utils/request.js')
-const configurl = require('../../utils/config.js')
+const api = require('../../utils/config.js')
+const util = require('../../utils/util.js')
 
 Page({
   data: {
-    viewUrl:configurl.viewUrl,
-    msgList: [
-      {
-        id: "1",
-        title: "恭喜王力入驻成功！"
-      },
-      {
-        id: "2",
-        title: "恭喜李鹏入驻成功！"
-      },
-      {
-        id: "3",
-        title: "恭喜王南入驻成功！"
-      }
-    ],
+    viewUrl:api.viewUrl,
+    msgList: [],
     bannerImg: [],
-    needsList: [{
-        id: 1,
-        needType: 0,
-        title: '祥源乡新农村工程点需要友们火速联系！',
-        price: '350/天',
-        location: '万载 | 双桥镇',
-        number: 2,
-        date: '2019.11.15',
-        status: '进行中'
-      },
-      {
-        id: 2,
-        needType: 1,
-        title: '祥源乡新农村工程点需要友们火速联系！',
-        price: '350/天',
-        location: '万载 | 双桥镇',
-        number: 2,
-        date: '2019.11.15',
-        status: '进行中'
-      },
-      {
-        id: 3,
-        needType: 0,
-        title: '祥源乡新农村工程点需要友们火速联系！',
-        price: '350/天',
-        location: '万载 | 双桥镇',
-        number: 2,
-        date: '2019.11.15',
-        status: '进行中'
-
-
-      }
-    ],
+    needsList: [],
     workerList: [],
     storeList: [],
     goodsList: [],
@@ -71,94 +27,93 @@ Page({
     this.xqneedlist()
     this.grneedlist() //工人
     this.sjneedlist()  //商家
-
+    this.spneedlist() //商品
   },
-// 需求列表
-xqneedlist() {
-  var that = this
-  var data={
-    pages: 1,
-    size: 10
-  }
-  qingqiu.get("zuixinxq", data, function(re) {
-    if (re.success == true) {
-      if (re.result != null) {
-        that.xuqiulist = re.result.records
-        for(var i= 0 ; i < that.xuqiulist.length; i++){
-          that.xuqiulist[i].publishTime = re.result.records[i].publishTime.split(" ")[0]
-        }    
-        that.setData ({
-          xuqiulist : re.result.records
-        })
-      } else {
-        qingqiu.tk('未查询到任何数据')
-      }
-    } else {
-      qingqiu.tk('请求出错啦')
+  // 需求列表
+  xqneedlist() {
+    var that = this
+    var data={
+      pages: 1,
+      size: 10
     }
-  })
-},
-// 推荐工人
-grneedlist() {
-  var that = this
-  var data={
-    pages: 1,
-    size: 10,
-    wxState:1
-  }
-  qingqiu.get("wxUserPage", data, function(re) {
-    if (re.success == true) {
-      if (re.result != null) {
-        console.log(re.result.records)
-        for(let obj of re.result.records){
-          if(obj.starClass == 0){
-            obj.shopName = ""
-          }else if(obj.starClass == 1){
-            obj.shopName = "一级工匠"
-          }else if(obj.starClass == 2){
-            obj.shopName = "二级工匠"
-          }else if(obj.starClass == 3){
-            obj.shopName = "三级工匠"
-          }else if(obj.starClass == 4){
-            obj.shopName = "四级工匠"
-          }if(obj.starClass == 5){
-            obj.shopName = "五级工匠"
+    qingqiu.get("zuixinxq", data, function(re) {
+      if (re.success == true) {
+        if (re.result != null) {
+          that.xuqiulist = re.result.records
+          for(var i= 0 ; i < that.xuqiulist.length; i++){
+            that.xuqiulist[i].publishTime = re.result.records[i].publishTime.split(" ")[0]
+          }    
+          that.setData ({
+            xuqiulist : re.result.records
+          })
+        } else {
+          qingqiu.tk('未查询到任何数据')
+        }
+      } else {
+        qingqiu.tk('请求出错啦')
+      }
+    })
+  },
+  // 推荐工人
+  grneedlist() {
+    var that = this
+    var data={
+      pages: 1,
+      size: 4,
+      wxState:1
+    }
+    qingqiu.get("wxUserPage", data, function(re) {
+      if (re.success == true) {
+        if (re.result != null) {
+          for(let obj of re.result.records){
+            if(obj.starClass == 0){
+              obj.shopName = ""
+            }else if(obj.starClass == 1){
+              obj.shopName = "一级工匠"
+            }else if(obj.starClass == 2){
+              obj.shopName = "二级工匠"
+            }else if(obj.starClass == 3){
+              obj.shopName = "三级工匠"
+            }else if(obj.starClass == 4){
+              obj.shopName = "四级工匠"
+            }if(obj.starClass == 5){
+              obj.shopName = "五级工匠"
+            }
+            obj.picIurl = that.data.viewUrl + obj.picIurl
+            obj.dateBirth = util.ages(obj.dateBirth)
+            obj.oneClassName = obj.oneClassName.replace(/,/, "|")
+            obj.twoClassName = obj.twoClassName.replace(/,/, "|")
           }
-          obj.picIurl = that.data.viewUrl + obj.picIurl
-          obj.oneClassName = obj.oneClassName.replace(/,/, "|")
-          obj.twoClassName = obj.twoClassName.replace(/,/, "|")
-        }
-        console.log(re.result.records)
-        that.setData({
-          storeList:re.result.records
-        })
+          that.setData({
+            workerList:re.result.records
+          })
+        } 
       } 
-    } 
-  })
-},
-// 推荐商家
-sjneedlist() {
-  var that = this
-  var data={
-    pages: 1,
-    size: 10,
-    wxState:0
-  }
-  qingqiu.get("wxUserPage", data, function(re) {
-    if (re.success == true) {
-      if (re.result != null) {
-        for(let obj of re.result.records){
-          obj.picIurl = that.data.viewUrl + obj.picIurl
-          obj.oneClassName = obj.oneClassName.replace(/,/, "|")
-          obj.twoClassName = obj.twoClassName.replace(/,/, "|")
-        }
-        that.setData({
-          goodsList:re.result.records
-        })
+    })
+  },
+  // 推荐商家
+  sjneedlist() {
+    var that = this
+    var data={
+      pages: 1,
+      size: 4,
+      wxState:0
+    }
+    qingqiu.get("wxUserPage", data, function(re) {
+      if (re.success == true) {
+        if (re.result != null) {
+          for(let obj of re.result.records){
+            obj.picIurl = that.data.viewUrl + obj.picIurl
+            obj.oneClassName = obj.oneClassName.replace(/,/, "|")
+            obj.twoClassName = obj.twoClassName.replace(/,/, "|")
+          }
+          that.setData({
+            storeList:re.result.records
+          })
+        } 
       } 
-    } 
-  })
-},
+    })
+  },
 
   // 获取广告
   firstbanner:function() {
@@ -174,7 +129,6 @@ sjneedlist() {
           for(let obj of that.data.bannerImg){
             obj.bannerUrl= that.data.viewUrl+obj.bannerUrl;
           }
-          console.log(that.data.bannerImg)
           that.setData({
             bannerImg:that.data.bannerImg
           })
@@ -225,8 +179,6 @@ sjneedlist() {
 
   advertisement:function(){
     var that = this
-    console.log(this)
-    console.log(that.data.bannerImg)
   },
  
 
@@ -263,15 +215,19 @@ sjneedlist() {
 
   },
   // 跳转到工人详情页面
-  workerDetails: function() {
+  workerDetails: function(e) {
+    var obj =e.currentTarget.dataset.vals;
+    obj = JSON.stringify(obj);
     wx.navigateTo({
-      url: '../workerDetails/workerDetails',
+      url: '../workerDetails/workerDetails?obj=' + obj,
     })
   },
   // 跳转到商家详情页面
-  businessDetails: function() {
+  businessDetails: function(e) {
+    var obj = e.currentTarget.dataset.vals
+    obj = JSON.stringify(obj)
     wx.navigateTo({
-      url: '../businessDetails/businessDetails',
+      url: '../businessDetails/businessDetails?obj=' + obj,
     })
   },
   // 跳转到商品列表页面
@@ -280,10 +236,39 @@ sjneedlist() {
       url: '../goodsList/goodsList',
     })
   },
-  // 跳转到商品详情页面
-  goodsDetails: function() {
-    wx.navigateTo({
-      url: '../goodsDetails/goodsDetails',
-    })
+  // 推荐商品
+  spneedlist() {
+    var that = this
+    var data={
+      pages: 1,
+      size: 10
+    }
+    qingqiu.get("tjsp", data, function(re) {
+      if (re.success == true) {
+        if (re.result.records != null) {
+          that.goodsList = re.result.records
+          //debugger
+          for(let obj of re.result.records){
+            obj.goodPic1 = that.data.viewUrl + obj.goodPic1.split(',')[0]
+            obj.goodPic2  = that.data.viewUrl + obj.goodPic2.split(',')[0]
+          }
+          that.setData ({
+            goodsList: re.result.records
+          })
+
+        } else {
+          qingqiu.tk('未查询到任何数据')
+        }
+      } 
+    })
   },
+  // 跳转到商品详情页面
+  goodsDetails(e) {
+    var obj =e.currentTarget.dataset.vals;
+        var shopxq = JSON.stringify(obj);
+        //debugger
+        wx.navigateTo({
+          url: '../goodsDetails/goodsDetails?obj=' + shopxq,
+        })
+      },
 })

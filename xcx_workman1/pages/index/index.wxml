@@ -160,8 +160,8 @@
       </view>
       <scroll-view class="worker-list" scroll-x="true" style='width:100%'>
         <view class="hengxiang">
-          <view class="" wx:for="{{storeList}}" wx:for-index="index" wx:key="id">
-            <view class="worker-item zongxiang" bindtap="workerDetails">
+          <view class="" wx:for="{{workerList}}" wx:for-index="index" wx:key="id">
+            <view class="worker-item zongxiang" bindtap="workerDetails" data-vals="{{item}}">
               <view class="worker-item-img">
                 <image src="{{item.picIurl}}" class="worker-img"></image>
               </view>
@@ -203,8 +203,8 @@
       </view>
       <scroll-view class="worker-list" scroll-x="true" style='width:100%'>
         <view class="hengxiang">
-          <view class="" wx:for="{{goodsList}}" wx:for-index="index" wx:key='index'>
-            <view class="worker-item zongxiang" bindtap="businessDetails">
+          <view class="" wx:for="{{storeList}}" wx:for-index="index" wx:key='index'>
+            <view class="worker-item zongxiang" bindtap="businessDetails" data-vals="{{item}}">
               <view class="worker-item-img">
                 <image src="{{item.picIurl}}" class="worker-img"></image>
               </view>
@@ -239,16 +239,16 @@
       <scroll-view class="worker-list" scroll-x="true" style='width:100%'>
         <view class="hengxiang">
           <view class="" wx:for="{{goodsList}}" wx:for-index="index" wx:key="index">
-            <view class="worker-item zongxiang" bindtap="goodsDetails">
+            <view class="worker-item zongxiang" bindtap="goodsDetails" data-vals="{{item}}">
               <view class="worker-item-img">
-                <image src="../image/top.png" class="worker-img"></image>
+                <image src="{{item.goodPic1}}" class="worker-img"></image>
               </view>
               <view class="worker-item-top shenglue">
-                {{item.goodsname}}
+                {{item.goodName}}
               </view>
               <view class="worker-item-bottom hengxiang">
                 <view class="worker-price">
-                  ¥{{item.goodsprice}}
+                  ¥{{item.newPrice}}
                 </view>
               </view>
               <view class="worker-item-bottom hengxiang">
@@ -256,7 +256,7 @@
                   <image src="../image/store.png" class="store-img"></image>
                 </view>
                 <view class="worker-sort shenglue">
-                  {{item.storename}}
+                  {{item.shopName}}
                 </view>
               </view>
             </view>
